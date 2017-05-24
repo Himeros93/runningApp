@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CourseSchema = new Schema({
-    nom: String,
+    nom: {type: String, unique: true},
     _date: {
         type: Date,
         default: Date.now

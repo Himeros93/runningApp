@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var MemberSchema = new Schema({
-    pseudo: String,
+    pseudo: {type: String, unique: true},
     nom: String,
     Created_date: {
         type: Date,

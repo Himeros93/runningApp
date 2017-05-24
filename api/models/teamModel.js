@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var TeamSchema = new Schema({
-    nom: String,
+    nom: {ype: String, unique: true},
     _createur: [{ type: Schema.Types.ObjectId, ref: 'Members', required:true }],
     Created_date: {
         type: Date,

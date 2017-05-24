@@ -12,12 +12,9 @@ var RoomSchema = new Schema({
 	unique: true
   },
   parcours: {
-    type: ParcoursSchema
+    type: { type: Schema.Types.ObjectId, ref: 'Parcours'}
   },
-  admin: {
-    type: [String],
-    Required: true
-  }
+  admin: [{ type: Schema.Types.ObjectId, ref: 'Team', required:true }]
 });
 
 

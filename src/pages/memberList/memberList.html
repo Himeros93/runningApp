@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Chercher un membre</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="home" padding>
+  <ion-item>
+    <ion-input type="text" placeholder="Chercher un membre" (input)="searchMembers($event, searchKey)"></ion-input>
+  </ion-item>
+
+  <ion-list>
+    <ion-item *ngFor="let member of members" (click)="itemTapped($event, member)">
+      <h2>{{member.pseudo}}</h2>
+      <p>{{member.nom}}</p>
+      <script>alert("1 fois");</script>
+    </ion-item>
+  </ion-list>
+</ion-content>

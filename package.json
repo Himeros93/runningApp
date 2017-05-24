@@ -1,0 +1,16 @@
+{
+  "name": "runatos",
+  "version": "1.0.0",
+  "description": "RESTful api",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.15.3",
+    "mongoose": "^4.10.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sylvain Melisson",
+  "license": "ISC"
+}

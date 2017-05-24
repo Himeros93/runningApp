@@ -6,9 +6,10 @@ var express = require('express'),
     app = express(),
     port = process.env.PORT || 3000,
     mongoose = require('mongoose'),
+    Parcours = require('./api/models/parcoursModel'),
+    Rooms = require('./api/models/roomModel')
     Members = require('./api/models/memberModel'),
     Teams = require('./api/models/teamModel'),
-    Parcours = require('./api/models/parcoursModel'),
     Courses = require('./api/models/courseModel'),
     bodyParser = require('body-parser');
 
@@ -34,6 +35,8 @@ app.listen(port);
 
 console.log('app RESTful API server started on: ' + port);
 
+var db = mongoose.connection;
+
 
 
 // debut de simulation de la base de données
@@ -49,6 +52,9 @@ var user = [{nom: "test", pass: "test", team: []}];
 function users(pseudo, mdp){
 	return{nom: pseudo, pass: mdp, team: []};
 };
+
+var userTest = new Members({pseudo: 'test', nom: 'gwen', mdp: 'test'});
+userTest.save();
 //fin de la simulation de la base de données
 
 
@@ -73,21 +79,19 @@ io.on('connection', function (socket) {
 	}
 
 	//login d'un utilisateur et association de la session à son pseudo
-	socket.on("login", function(pseudo, pass){
-		console.log("tentative de login avec " + pseudo + " " + pass);
-		var test = false;
-		for(var i = 0; i < user.length; i++){
-			if(user[i].nom === pseudo && user[i].pass === pass){
-				test = true;
-			}
-		}
-		if(test){
-			socket.emit("status", "Vous vous etes loggé.");
-			for(var i = 0; i < socketList.length; i++){
-				if(socketList[i].id === socket.handshake.query.id){
-					socketList[i].pseudo = pseudo;
-				}
-			}
+	socket.on("login", function(pseudot, pass){
+		console.log("tentative de login avec " + pseudot + " " + pass);
+		if(Members.find({'pseudo': pseudot, 'mdp': pass})){
+		    Members.find({pseudo : pseudot, mdp: pass}).exec( function(err, res){
+		        console.log(res);
+            });
+            console.log();
+		    socket.emit("status", "Vous vous etes loggé.");
+            for(var i = 0; i < socketList.length; i++){
+                if(socketList[i].id === socket.handshake.query.id){
+                    socketList[i].pseudo = pseudot;
+                }
+            }
 		} else {
 			socket.emit("status", "Erreur dans le pseudo ou mot de passe.");
 		}
@@ -173,27 +177,21 @@ socket.on("joinRoom", function(data){
 
 //creer une room
 function createRoom(nomTeam){
-	room.push(rooms(nomTeam));
+	var newRoom = new Rooms({id: nomTeam+""+(Math.random().toFixed(3)*1000), parcours: null, admin: [nomTeam]});
 }
 
 //creer une equipe
-function createTeam(nom, nomTeam){
-	equipe.push(equipes(nomTeam, nom));
-	for(var i = 0; i < user.length; i++){
-		if(user[i].nom === nom){
-			user[i].team.push(nomTeam);
-		}
-	}
+function createTeam(nomUser, nomTeam){
+    var userTest = Members.find({'pseudo': nomUser}).lean();
+    console.log("Membre "+ nomUser + " d'id " + userTest.pseudo);
+	var newTeam = new Teams({nom: nomTeam, _createur: (Members.findOne({pseudo: nomUser}))._id, _membre: [(Members.findOne({pseudo: nomUser}))._id]});
+	newTeam.save();
 }
 
 //recuperer la team d'une room
 function teamFromRoom(nomRoom){
-	room.forEach(function(salle){
-		if(salle.id === nomRoom){
-			return salle.team;
-		} 
-	});
-	return null;
+	var teamFind = (Rooms.find({id: nomRoom})).admin;
+	return teamFind;
 }
 
 
@@ -225,33 +223,17 @@ function isConnected(socket){
 
 //verifie si l'utilisateur fait partie de l'equipe
 function isOfTeam(socket, nom, nomTeam){
-	for(var j = 0; j < equipe.length; j++){
-		if(equipe[j].nom === nomTeam){
-			for(var k = 0; k < equipe[j].participants.length; k++){
-				if(equipe[j].participants[k] === nom){
-					return true;
-				}
-			}
-			return false;
-		}
-	}
-	socket.emit("status", "Aucune equipe de ce nom n'existe.");
+	if(Teams.find({nom: nomTeam, _membre: {$in: (Members.findOne({pseudo: nom}).limit(1).size())._id}})){
+	    return true;
+    }
+	socket.emit("status", "Erreur, l'equipe n'existe pas ou vous n'en faite pas partie.");
 	return false;
 }
 
 
 //ajouter utilisateur à l equipe
 function addToTeam(nom, team){
-	for(var j = 0; j < equipe.length; j++){
-		if(equipe[j].nom === team){
-			equipe[j].participants.push(nom);
-			for(var i = 0; i < user.length; i++){
-				if(user[i].nom === nom){
-					user[i].team.push(team);
-				}
-			}
-		}
-	}
+	Teams.updateOne({nom: team}, {$addToSet: {_membre : (Members.findOne({pseudo: nom}))._id}});
 }
 
 

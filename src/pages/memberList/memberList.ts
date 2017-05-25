@@ -8,6 +8,7 @@ import {Member} from '../member/member';
   providers: [MemberService]
 })
 
+
 export class MemberListPage {
 
   members: Array<any> = [];
@@ -21,9 +22,9 @@ export class MemberListPage {
       this.memberService.searchMember(event.target.value).subscribe(
         data => {
           if(data != null){
-          this.members = [data];
+          this.members = data;
           console.log(this.members);
-          console.log(data);}
+          console.log(this.members);}
         },
         err => {
           console.log(err);

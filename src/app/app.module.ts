@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { ActualiteePage } from '../pages/actualitee/actualitee';
 import { MemberListPage } from '../pages/memberList/memberList';
+import {Member} from '../pages/member/member';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -14,7 +15,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   declarations: [
     MyApp,
     ActualiteePage,
-    MemberListPage
+    MemberListPage,
+	Member
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     ActualiteePage,
-    MemberListPage
+    MemberListPage,
+	Member
   ],
   providers: [
     StatusBar,

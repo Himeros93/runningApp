@@ -3,10 +3,19 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{pseudo}}</ion-title>
+    <ion-title>Retour</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
+<h2>Pseudo: {{pseudo}}</h2>
+<h2>Nom: {{nom}}</h2>
+<ion-fab bottom right>
+  <button ion-fab color="primary"></button>
+  <ion-fab-list side="top">
+	<button ion-fab>Ajouter à l'équipe</button>
+    <button ion-fab>Bloquer</button>
+  </ion-fab-list>
+</ion-fab>
 
 </ion-content>

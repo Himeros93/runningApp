@@ -46,6 +46,20 @@ loadMap() {
    () => {
      console.log('Map is ready!');
      // Now you can add elements to the map like the marker
+	 map.addMarker(markerOptions).then((marker: Marker) => {
+      myMarkers.push(marker);
+	  console.log(marker);
+    });
+	
+ let watch = this.geolocation.watchPosition();
+	watch.subscribe((data) => {
+		myPosition = new LatLng(data.coords.latitude, data.coords.longitude);
+		position.target = myPosition;
+		map.moveCamera(position);
+		myMarkers[0].setPosition(myPosition);
+	}, err => {
+		console.log(err);
+    });
    }
  );
 
@@ -61,22 +75,11 @@ loadMap() {
  // create new marker
  let markerOptions: MarkerOptions = {
    position: new LatLng(48.8566140, 2.3522220),
-   title: 'Moi'
+   title: 'Moi',
+   icon: {url: './assets/img/runner.png'}
  };
 
- var myMarker: Marker = new Marker(markerOptions);
- 
- map.addMarker(myMarker);
-	
- let watch = this.geolocation.watchPosition();
-	watch.subscribe((data) => {
-		myPosition = new LatLng(data.coords.latitude, data.coords.longitude);
-		position.target = myPosition;
-		map.moveCamera(position);
-		myMarker.setPosition(myPosition);
-	}, err => {
-		console.log(err);
-    });
+ var myMarkers: Array<Marker> = [];
  }
  
 

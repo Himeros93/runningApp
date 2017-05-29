@@ -25,10 +25,10 @@ export class MemberService {
   createMember(member){
       var headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      return this.http.post(
+      /*return this.http.post(
         '/members/',
-        JSON.stringify(member), {headers}
-        );
+        //JSON.stringify(member), {headers}
+        );*/
   }
 
 }

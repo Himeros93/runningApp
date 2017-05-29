@@ -5,7 +5,7 @@ import { NavController, NavParams } from 'ionic-angular';
   selector: '../memberList/memberList.html',
   templateUrl: 'member.html'
 })
-export class Member {
+export class MemberPage {
   pseudo: string;
   nom: string;
 

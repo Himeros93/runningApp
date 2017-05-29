@@ -1,13 +1,12 @@
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {MemberService} from '../services/memberService';
-import {Member} from '../member/member';
+import {MemberPage} from '../member/member';
 
 @Component({
   templateUrl: '../memberList/memberList.html',
   providers: [MemberService]
 })
-
 
 export class MemberListPage {
 
@@ -24,7 +23,7 @@ export class MemberListPage {
           if(data != null){
           this.members = data;
           console.log(this.members);
-          console.log(this.members);}
+          }
         },
         err => {
           console.log(err);
@@ -36,7 +35,7 @@ export class MemberListPage {
 
   itemTapped(event, member) {
     console.log(member);
-    this.navController.push(Member, {
+    this.navController.push(MemberPage, {
       pseudo: member.pseudo,
       nom: member.nom
     });

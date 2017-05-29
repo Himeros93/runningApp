@@ -11,9 +11,10 @@ module.exports = function(app) {
         .get(Members.list_all_members)
         .post(Members.create_a_member);
 
+    app.route('/members/:memberPseudo')
+        .get(Members.read_a_member);
 
     app.route('/members/:memberId')
-        .get(Members.read_a_member)
         .put(Members.update_a_member)
         .delete(Members.delete_a_member);
 };

@@ -23,10 +23,11 @@ exports.create_a_member = function(req, res) {
 };
 
 exports.read_a_member = function(req, res) {
-    Member.find( {pseudo : req.params.memberId}, function(err, member) {
+    Member.find({ $or:[{'pseudo': new RegExp(req.params.memberPseudo, 'i')},{'nom': new RegExp(req.params.memberPseudo, 'i')}] },
+        function(err, member) {
         if (err)
             res.send(err);
-		res.json(member);
+        res.json(member);
     });
 };
 

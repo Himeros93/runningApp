@@ -7,6 +7,7 @@ var Schema = mongoose.Schema;
 var MemberSchema = new Schema({
     pseudo: {type: String, unique: true},
     nom: String,
+    mail: String,
     Created_date: {
         type: Date,
         default: Date.now

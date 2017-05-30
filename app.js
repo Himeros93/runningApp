@@ -10,6 +10,7 @@ var express = require('express'),
     Teams = require('./api/models/teamModel'),
     Parcours = require('./api/models/parcoursModel'),
     Courses = require('./api/models/courseModel'),
+	Events = require('./api/models/eventModel'),
     bodyParser = require('body-parser');
 
 mongoose.Promise = global.Promise;
@@ -29,6 +30,9 @@ parcoursRoute(app);
 
 var courseRoute = require('./api/route/courseRoute');
 courseRoute(app);
+
+var eventRoute = require('./api/route/eventRoute');
+eventRoute(app);
 
 app.listen(port);
 

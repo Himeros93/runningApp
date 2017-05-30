@@ -12,7 +12,8 @@ var MemberSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    mdp: String
+    mdp: String,
+	token: {type: String, unique: true}
 });
 
 module.exports = mongoose.model('Members', MemberSchema);

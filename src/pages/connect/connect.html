@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Connexion</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="valideForm()" #registerForm="ngForm">
+  <ion-list>
+
+    <ion-item>
+      <ion-label stacked>Pseudo:</ion-label>
+      <ion-input type="text" name="pseudo" required [(ngModel)]="member.pseudo"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Mot de passe:</ion-label>
+      <ion-input type="password" name="mdp" required [(ngModel)]="member.mdp"></ion-input>
+    </ion-item>
+
+    <ion-item>
+    <button ion-button class="register-btn" type="submit">Create New Account</button>
+    </ion-item>
+  </ion-list>
+  </form>
+</ion-content>

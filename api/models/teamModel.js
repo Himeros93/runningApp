@@ -11,7 +11,9 @@ var TeamSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    _membre: [{ type: Schema.Types.ObjectId, ref: 'Members', required:true }]
+    _membres: [{ type: Schema.Types.ObjectId, ref: 'Members', required:true }],
+    _coursesHist: [{ type: Schema.Types.ObjectId, ref: 'CourseHist'}],
+    totalKm: {type: Number}
 });
 
 module.exports = mongoose.model('Teams', TeamSchema);

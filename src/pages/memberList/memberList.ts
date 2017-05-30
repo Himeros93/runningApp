@@ -16,13 +16,13 @@ export class MemberListPage {
 
   }
 
-  searchMembers(event, key) {
+  searchMembers(event) {
     if(event.target.value.length > 2) {
       this.memberService.searchMember(event.target.value).subscribe(
         data => {
           if(data != null){
-          this.members = data;
-          console.log(this.members);
+            this.members = data;
+            console.log(this.members);
           }
         },
         err => {
@@ -33,7 +33,7 @@ export class MemberListPage {
     }
   }
 
-  itemTapped(event, member) {
+  itemTapped(member) {
     console.log(member);
     this.navController.push(MemberPage, {
       pseudo: member.pseudo,

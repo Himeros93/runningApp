@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var MemberSchema = new Schema({
+    _id: {select: false},
     pseudo: {type: String, unique: true},
     nom: String,
     mail: String,
@@ -12,7 +13,11 @@ var MemberSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    mdp: String
+    mdp: {
+        type : String,
+        select: false
+    },
+    performance: [{ type: Schema.Types.ObjectId, ref: 'Members', required:true }]
 });
 
 module.exports = mongoose.model('Members', MemberSchema);

@@ -9,7 +9,6 @@ module.exports = function(app) {
         .get(Parcours.list_all_parcours)
         .post(Parcours.create_a_parcours);
 
-
     app.route('/parcours/:parcoursId')
         .get(Parcours.read_a_parcours)
         .put(Parcours.update_a_parcours)

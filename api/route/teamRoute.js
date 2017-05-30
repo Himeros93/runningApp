@@ -11,9 +11,10 @@ module.exports = function(app) {
         .get(Teams.list_all_teams)
         .post(Teams.create_a_team);
 
+    app.route('/teams/:teamNom')
+        .get(Teams.read_a_team)
 
     app.route('/teams/:teamId')
-        .get(Teams.read_a_team)
         .put(Teams.update_a_team)
         .delete(Teams.delete_a_team);
 };

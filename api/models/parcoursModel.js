@@ -3,10 +3,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ParcoursSchema = new Schema({
-  id: {
-    type: String,
-	unique: true
-  },
   longueur: [Number],
   lat: {
     type: [Number]

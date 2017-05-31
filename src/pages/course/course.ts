@@ -9,9 +9,11 @@
 } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';*/
 import * as io from "socket.io-client";
+import { Storage } from '@ionic/storage';
 
 import {Component, AfterViewInit} from '@angular/core';
 import {NavController} from 'ionic-angular';
+import {ConnectPage} from '../connect/connect';
 
 @Component({
   selector: 'coursePage',
@@ -19,15 +21,19 @@ import {NavController} from 'ionic-angular';
 })
 
 export class CoursePage implements AfterViewInit{
- constructor(/*private googleMaps: GoogleMaps, private geolocation: Geolocation*/) {}
+ constructor(/*private googleMaps: GoogleMaps, private geolocation: Geolocation*/ private storage: Storage, private navCtrl: NavController) {
+	 if (!localStorage.pseudo && !localStorage.token){
+		this.navCtrl.setRoot(ConnectPage);
+	}
+ }
  
  socket: any;
  
 	
 	ngAfterViewInit(){
-		storage.get('token').then((val) => {
-			storage.get('token').then((val2) => {
-				connect(val, val2);
+		this.storage.get('token').then((val) => {
+			this.storage.get('token').then((val2) => {
+				this.connect(val, val2);
 			});
 		});
 	}
@@ -37,7 +43,7 @@ ngAfterViewInit() {
  this.loadMap();
 }*/
 connect(token, pseudo){
-	this.socket = io("http://localhost:8080", {query : 'token=' + token, query: 'pseudo=' + pseudo});
+	this.socket = io("http://localhost:8080", {query : 'token=' + token + ',pseudo=' + pseudo});
 		this.socket.on('test', () => {
 			alert("coucou!");
 		});

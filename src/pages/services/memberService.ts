@@ -4,15 +4,17 @@
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Headers} from '@angular/http';
-import { Storage } from '@ionic/storage';
+import { ActualiteePage } from '../actualitee/actualitee';
+
 
 export class MemberService {
   static get parameters() {
     return [[Http]];
   }
+  
 
-  constructor(private http:Http, private storage: Storage) {
-
+  constructor(private http:Http) {
+	  
   }
 
   searchMember(memberPseudo) {
@@ -34,7 +36,7 @@ export class MemberService {
       'http://localhost:3000/members/',
       JSON.stringify(member), {headers})
       .map(res => res.json())
-      .subscribe( data => {console.log(data)});
+      .subscribe( data => {console.log(data + "coucou")});
   }
   
   connectMember(member){
@@ -46,8 +48,8 @@ export class MemberService {
       .map(res => res.json())
       .subscribe( data => {
 		  console.log(data);
-		  storage.set('token', JSON.parse(data).token);
-		  storage.set('pseudo', JSON.parse(data).pseudo);
+		  localStorage.setItem("token", data.token);
+		  localStorage.setItem("pseudo", data.pseudo);
 	  });
   }
 

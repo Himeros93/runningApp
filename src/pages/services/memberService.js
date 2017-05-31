@@ -18,6 +18,11 @@ var MemberService = (function () {
         var response = this.http.get(url).map(function (res) { return res.json(); });
         return response;
     };
+	MemberService.prototype.connectMember = function () {
+        var url = 'http://localhost:3000/connect/';
+        var response = this.http.get(url).map(function (res) { return res.json(); });
+        return response;
+    };
     return MemberService;
 }());
 exports.MemberService = MemberService;

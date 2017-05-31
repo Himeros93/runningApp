@@ -1,4 +1,4 @@
-import {
+/*import {
  GoogleMaps,
  GoogleMap,
  GoogleMapsEvent,
@@ -7,7 +7,8 @@ import {
  MarkerOptions,
  Marker
 } from '@ionic-native/google-maps';
-import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation } from '@ionic-native/geolocation';*/
+import * as io from "socket.io-client";
 
 import {Component, AfterViewInit} from '@angular/core';
 import {NavController} from 'ionic-angular';
@@ -18,15 +19,30 @@ import {NavController} from 'ionic-angular';
 })
 
 export class CoursePage implements AfterViewInit{
- constructor(private googleMaps: GoogleMaps, private geolocation: Geolocation) {}
+ constructor(/*private googleMaps: GoogleMaps, private geolocation: Geolocation*/) {}
  
+ socket: any;
+ 
+	
+	ngAfterViewInit(){
+		storage.get('token').then((val) => {
+			storage.get('token').then((val2) => {
+				connect(val, val2);
+			});
+		});
+	}
 
-// Load map only after view is initialized
+/*// Load map only after view is initialized
 ngAfterViewInit() {
  this.loadMap();
+}*/
+connect(token, pseudo){
+	this.socket = io("http://localhost:8080", {query : 'token=' + token, query: 'pseudo=' + pseudo});
+		this.socket.on('test', () => {
+			alert("coucou!");
+		});
 }
-
-loadMap() {
+/*loadMap() {
  // make sure to create following structure in your view.html file
  // and add a height (for example 100%) to it, else the map won't be visible
  // <ion-content>
@@ -82,6 +98,6 @@ loadMap() {
  var myMarkers: Array<Marker> = [];
  }
  
-
+*/
 
 }

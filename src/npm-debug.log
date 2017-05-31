@@ -1,0 +1,55 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'view',
+1 verbose cli   'ionic',
+1 verbose cli   'dist-tags.latest',
+1 verbose cli   '--json' ]
+2 info using npm@3.10.10
+3 info using node@v6.9.4
+4 silly mapToRegistry name ionic
+5 silly mapToRegistry using default registry
+6 silly mapToRegistry registry https://registry.npmjs.org/
+7 silly mapToRegistry data Result {
+7 silly mapToRegistry   raw: 'ionic',
+7 silly mapToRegistry   scope: null,
+7 silly mapToRegistry   escapedName: 'ionic',
+7 silly mapToRegistry   name: 'ionic',
+7 silly mapToRegistry   rawSpec: '',
+7 silly mapToRegistry   spec: 'latest',
+7 silly mapToRegistry   type: 'tag' }
+8 silly mapToRegistry uri https://registry.npmjs.org/ionic
+9 verbose request uri https://registry.npmjs.org/ionic
+10 verbose request no auth needed
+11 info attempt registry request try #1 at 11:12:16
+12 verbose request id 653c419a7825516c
+13 verbose etag W/"59272e9c-144b1e"
+14 verbose lastModified Thu, 25 May 2017 19:21:00 GMT
+15 http request GET https://registry.npmjs.org/ionic
+16 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=connect ETIMEDOUT 193.56.47.8:8080
+17 info attempt registry request try #2 at 11:12:47
+18 verbose etag W/"59272e9c-144b1e"
+19 verbose lastModified Thu, 25 May 2017 19:21:00 GMT
+20 http request GET https://registry.npmjs.org/ionic
+21 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=connect ETIMEDOUT 193.56.47.8:8080
+22 verbose stack Error: kill ENOSYS
+22 verbose stack     at exports._errnoException (util.js:1022:11)
+22 verbose stack     at process.kill (internal/process.js:172:13)
+22 verbose stack     at process.listener (C:\Program Files\nodejs\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:86:15)
+22 verbose stack     at emitNone (events.js:91:20)
+22 verbose stack     at process.emit (events.js:185:7)
+22 verbose stack     at processEmit (C:\Program Files\nodejs\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+22 verbose stack     at processEmit (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+22 verbose stack     at Signal.wrap.onsignal (internal/process.js:199:44)
+23 verbose cwd C:\Users\A648050\Desktop\runningApp\src
+24 error Windows_NT 6.1.7601
+25 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "view" "ionic" "dist-tags.latest" "--json"
+26 error node v6.9.4
+27 error npm  v3.10.10
+28 error code ENOSYS
+29 error errno ENOSYS
+30 error syscall kill
+31 error kill ENOSYS
+32 error If you need help, you may report this error at:
+32 error     <https://github.com/npm/npm/issues>
+33 verbose exit [ 1, true ]

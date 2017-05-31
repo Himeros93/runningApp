@@ -9,6 +9,7 @@ import { ActualiteePage } from '../pages/actualitee/actualitee';
 import { MemberListPage } from '../pages/memberList/memberList';
 import { MemberPage } from '../pages/member/member';
 import { CreateMemberPage } from '../pages/createMember/createMember';
+import { CoursePage } from '../pages/course/course';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -19,7 +20,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ActualiteePage,
     MemberListPage,
     MemberPage,
-    CreateMemberPage
+    CreateMemberPage,
+	CoursePage
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ActualiteePage,
     MemberListPage,
     MemberPage,
-    CreateMemberPage
+    CreateMemberPage,
+	CoursePage
   ],
   providers: [
     StatusBar,

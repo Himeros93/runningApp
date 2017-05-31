@@ -52,6 +52,7 @@ console.log("Serveur demarré au port: " + portSocket);
 //gestion des sockets à partir d'ici
 io.on('connection', function (socket) {
     var test = false;
+    socket.emit('test');
     console.log(socket.handshake.query.pseudo);
     for (var i = 0; i < socketList.length; i++) {
         if (socketList[i].pseudo === socket.handshake.query.pseudo) {

@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{nom}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+    Leader: {{_createur.nom}}
+    </ion-card-header>
+  </ion-card>
+
+    <ion-item>
+      Membres:
+    </ion-item>
+    <div *ngFor="let membre of _membres" (click)="itemTapped(membre)">
+      <ion-card>
+        <ion-card-content>
+          <h2>{{membre.pseudo}}</h2>
+          <p>{{membre.nom}}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+
+</ion-content>

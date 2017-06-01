@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Creer une équipe</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Nom :</ion-label>
+        <ion-input type="text" name="nom" required [(ngModel)]="team.nom"></ion-input>
+      </ion-item>
+
+      <ion-item *ngFor="let member of members">
+        <ion-label><h2>{{member.pseudo}}</h2>
+          <p>{{member.nom}}</p> </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <button ion-button class="register-btn" (click)="openModal()">Ajouter des membres</button>
+      </ion-item>
+
+      <ion-item>
+      <button ion-button class="register-btn" type="submit" (click)="valideForm()">Créer l'équipe</button>
+    </ion-item>
+    </ion-list>
+
+</ion-content>

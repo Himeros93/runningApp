@@ -43,7 +43,7 @@ ngAfterViewInit() {
  this.loadMap();
 }*/
 connect(token, pseudo){
-	this.socket = io("http://localhost:8080", {query : 'token=' + token + ',pseudo=' + pseudo});
+	this.socket = io(localStorage.ip + ":8080", {query : 'token=' + token + ',pseudo=' + pseudo});
 		this.socket.on('test', () => {
 			alert("coucou!");
 		});

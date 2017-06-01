@@ -7,6 +7,7 @@ import { ActualiteePage } from '../pages/actualitee/actualitee';
 import { MemberListPage } from '../pages/memberList/memberList';
 import { CreateMemberPage} from '../pages/createMember/createMember';
 import { CoursePage } from '../pages/course/course';
+import { SettingsPage } from '../pages/settings/settings';
 
 @Component({
   templateUrl: 'app.html'
@@ -26,7 +27,8 @@ export class MyApp {
       { title: 'Actualitée', component: ActualiteePage },
       { title: 'Chercher membre', component: MemberListPage },
       { title: 'Créer un compte', component: CreateMemberPage },
-      { title: 'Courir', component: CoursePage }
+      { title: 'Courir', component: CoursePage },
+      { title: 'Parametres', component: SettingsPage }
     ];
 
   }

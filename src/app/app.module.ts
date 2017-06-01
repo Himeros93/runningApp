@@ -12,6 +12,7 @@ import { MemberPage } from '../pages/member/member';
 import { CreateMemberPage } from '../pages/createMember/createMember';
 import { CoursePage } from '../pages/course/course';
 import { ConnectPage } from '../pages/connect/connect';
+import { SettingsPage } from '../pages/settings/settings';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,7 +25,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MemberPage,
     CreateMemberPage,
 	CoursePage,
-	ConnectPage
+	ConnectPage,
+	SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MemberPage,
     CreateMemberPage,
 	CoursePage,
-	ConnectPage
+	ConnectPage,
+	SettingsPage
   ],
   providers: [
     StatusBar,

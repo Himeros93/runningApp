@@ -22,18 +22,10 @@ export class ConnectPage {
   }
 
   valideForm(){
-    this.memberService.connectMember(this.member);
 	this.dialog.show();
-	var dial = this.dialog;
-	var intervalHandle = setInterval(function() {
-		if (localStorage.pseudo && localStorage.token){
-			//Some actions
-			clearInterval(intervalHandle);
-			dial.hide();
-		}
-	},1000);
-	
+    this.memberService.connectMember(this.member, this.navController, this.dialog);
   }
+  
   random32bit() {
     let u = new Uint32Array(1);
     window.crypto.getRandomValues(u);

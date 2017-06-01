@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Parametres</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="valideForm()" #registerForm="ngForm">
+  <ion-list>
+
+    <ion-item>
+      <ion-label stacked>Ip:</ion-label>
+      <ion-input type="text" name="@ip" required [(ngModel)]="adresse.ip"></ion-input>
+    </ion-item>
+
+    <ion-item>
+    <button ion-button class="register-btn" type="submit">Se connecter</button>
+    </ion-item>
+  </ion-list>
+  </form>
+</ion-content>

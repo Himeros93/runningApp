@@ -28,7 +28,7 @@ exports.create_a_team = function(req, res) {
 
 exports.read_a_team = function(req, res) {
     Team.find({'nom': new RegExp(req.params.teamNom, 'i')})
-    .populate('_membre')
+        .populate('_membres' , 'pseudo nom')
         .populate('_createur')
         .exec(function(err, team) {
         if (err)

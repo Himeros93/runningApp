@@ -14,8 +14,8 @@ module.exports = function(app) {
     app.route('/members/:memberPseudo')
         .get(Members.read_a_member);
 		
-	app.route('/connect/')
-        .get(Members.connect_a_member);
+	app.route('/connect')
+        .post(Members.connect_a_member);
 
     app.route('/members/:memberId')
         .put(Members.update_a_member)

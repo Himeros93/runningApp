@@ -16,7 +16,8 @@ var MemberSchema = new Schema({
         type : String,
         select: false
     },
-    performance: [{ type: Schema.Types.ObjectId, ref: 'Members', required:true }]
+    performance: [{ type: Schema.Types.ObjectId, ref: 'Members', required:true }],
+    token: {type: String, unique: true}
 });
 
 module.exports = mongoose.model('Members', MemberSchema);

@@ -15,9 +15,7 @@ exports.list_all_members = function(req, res) {
 
 exports.create_a_member = function(req, res) {
 	var erreur = [];
-	var value = JSON.parse(req.body);
-	console.log(req.body);
-	console.log(value);
+	var value = req.body;
 	Member.find({pseudo: value.pseudo}, function(err, result){
 		if(result.length){
 			erreur.push("Le pseudo existe déjà. ");
@@ -45,14 +43,15 @@ exports.create_a_member = function(req, res) {
 
 exports.connect_a_member = function(req, res) {
 	var erreur = [];
-	var value = JSON.parse(req.body);
+	var value = req.body;
 	console.log(req.body);
 	console.log(value);
 	Member.find({pseudo: value.pseudo, mdp: value.mdp}, function(err, result){
 		if(result.length){
-			result.token = random32bit();
-			result.save(function (err, updatedValue) {
-				if (err) return handleError(err);
+			result[0].token = value.token;
+			result[0].save(function (error, updatedValue) {
+				if (error) {return handleError(error)};
+				console.log(updatedValue);
 				res.json(updatedValue);
 			});
 		}else{

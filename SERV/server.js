@@ -66,7 +66,10 @@ io.on('connection', function (socket) {
         console.log("Utilisateur connecté.");
         socket.emit('status', "Connecté!");
     }
-
+	
+	socket.on("position", function (pos) {
+		socket.broadcast.emit("pos", pos, socket.handshake.query.pseudo);
+	}
 
     //envoie de la position d'un utilisateur à tous les utilisateurs
     socket.on("updatePosition", function (pos) {

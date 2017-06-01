@@ -16,6 +16,7 @@ import { CoursePage } from '../pages/course/course';
 import { ConnectPage } from '../pages/connect/connect';
 import { CreateTeamPage } from '../pages/createTeam/createTeam';
 import { SelectMemberModal } from '../pages/createTeam/selectMemberModal';
+import { SettingsPage } from '../pages/settings/settings';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -32,6 +33,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 	CoursePage,
 	ConnectPage,
     CreateTeamPage,
+	SettingsPage,
     SelectMemberModal
   ],
   imports: [
@@ -52,6 +54,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 	CoursePage,
 	ConnectPage,
     CreateTeamPage,
+	SettingsPage,
     SelectMemberModal,
   ],
   providers: [

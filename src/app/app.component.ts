@@ -9,6 +9,7 @@ import { CreateMemberPage} from '../pages/createMember/createMember';
 import { CoursePage } from '../pages/course/course';
 import { CreateTeamPage} from '../pages/createTeam/createTeam';
 import { TeamListPage } from '../pages/teamList/teamList';
+import { SettingsPage } from '../pages/settings/settings';
 @Component({
   templateUrl: 'app.html'
 })
@@ -21,7 +22,8 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
-
+	
+	localStorage.setItem('ip', 'http://localhost');
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Actualitée', component: ActualiteePage },
@@ -29,7 +31,8 @@ export class MyApp {
       { title: 'Créer un compte', component: CreateMemberPage },
       { title: 'Courir', component: CoursePage },
       { title: 'Chercher une équipe', component: TeamListPage },
-      { title: 'Créer une équipe', component: CreateTeamPage }
+      { title: 'Créer une équipe', component: CreateTeamPage },
+      { title: 'Parametres', component: SettingsPage }
     ];
   }
 

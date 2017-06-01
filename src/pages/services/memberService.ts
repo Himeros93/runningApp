@@ -16,7 +16,7 @@ export class MemberService {
   }
 
   searchMember(memberPseudo) {
-    var url = 'http://localhost:3000/members/' + memberPseudo;
+    var url = localStorage.ip + ':3000/members/' + memberPseudo;
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
@@ -25,7 +25,7 @@ export class MemberService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(
-      'http://localhost:3000/members/',
+      localStorage.ip + ':3000/members/',
       JSON.stringify(member), {headers})
       .map(res => res.json())
       .subscribe( data => {console.log(data)});
@@ -35,7 +35,7 @@ export class MemberService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(
-      'http://localhost:3000/connect/',
+      localStorage.ip + ':3000/connect/',
       JSON.stringify(member), {headers})
       .map(res => res.json())
       .subscribe( data => {

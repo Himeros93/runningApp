@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -18,21 +18,28 @@ export class MyApp {
 
   rootPage: any = ActualiteePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, droit: string}>;
+  
+  droit: String;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
     this.initializeApp();
 	
 	localStorage.setItem('ip', 'http://localhost');
+	if(localStorage.droit !== "utilisateur" && localStorage.droit !== "admin"){
+		localStorage.setItem('droit', 'utilisateur');
+	}
+	
+	this.droit = localStorage.droit;
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Actualitée', component: ActualiteePage },
-      { title: 'Chercher membre', component: MemberListPage },
-      { title: 'Créer un compte', component: CreateMemberPage },
-      { title: 'Courir', component: CoursePage },
-      { title: 'Chercher une équipe', component: TeamListPage },
-      { title: 'Créer une équipe', component: CreateTeamPage },
-      { title: 'Parametres', component: SettingsPage }
+      { title: 'Actualitée', component: ActualiteePage, droit : "utilisateur" },
+      { title: 'Chercher membre', component: MemberListPage, droit : "utilisateur" },
+      { title: 'Créer un compte', component: CreateMemberPage, droit : "utilisateur" },
+      { title: 'Courir', component: CoursePage, droit : "utilisateur" },
+      { title: 'Chercher une équipe', component: TeamListPage, droit : "utilisateur" },
+      { title: 'Créer une équipe', component: CreateTeamPage, droit : "utilisateur" },
+      { title: 'Parametres', component: SettingsPage, droit : "utilisateur" }
     ];
   }
 
@@ -50,4 +57,12 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+  
+  menuClosed() {
+    this.events.publish('menu:closed', '');
+}
+
+menuOpened() {
+    this.events.publish('menu:opened', '');
+}
 }

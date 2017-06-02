@@ -1,4 +1,4 @@
-/*import {
+import {
  GoogleMaps,
  GoogleMap,
  GoogleMapsEvent,
@@ -7,12 +7,12 @@
  MarkerOptions,
  Marker
 } from '@ionic-native/google-maps';
-import { Geolocation } from '@ionic-native/geolocation';*/
+import { Geolocation } from '@ionic-native/geolocation';
 import * as io from "socket.io-client";
 import { Storage } from '@ionic/storage';
 
 import {Component, AfterViewInit} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController, Events} from 'ionic-angular';
 import {ConnectPage} from '../connect/connect';
 
 @Component({
@@ -21,44 +21,81 @@ import {ConnectPage} from '../connect/connect';
 })
 
 export class CoursePage implements AfterViewInit{
- constructor(/*private googleMaps: GoogleMaps, private geolocation: Geolocation*/ private storage: Storage, private navCtrl: NavController) {
+ constructor(private googleMaps: GoogleMaps, private geolocation: Geolocation, private storage: Storage, private navCtrl: NavController, public events: Events) {
 	 if (!localStorage.pseudo && !localStorage.token){
 		this.navCtrl.setRoot(ConnectPage);
 	}
  }
  
  socket: any;
- 
-	
-	ngAfterViewInit(){
-		this.storage.get('token').then((val) => {
-			this.storage.get('token').then((val2) => {
-				this.connect(val, val2);
-			});
-		});
-	}
+ map: GoogleMap;
+ testMap: boolean;
 
-/*// Load map only after view is initialized
+// Load map only after view is initialized
 ngAfterViewInit() {
- this.loadMap();
-}*/
-connect(token, pseudo){
-	this.socket = io(localStorage.ip + ":8080", {query : 'token=' + token + ',pseudo=' + pseudo});
-		this.socket.on('test', () => {
-			alert("coucou!");
-		});
+	
+	this.loadMap(localStorage.token, localStorage.pseudo);
+	this.testMap = true
 }
-/*loadMap() {
+
+toggle(){
+	this.testMap = !this.testMap;
+	this.map.setClickable(this.testMap);
+}
+
+hello(){
+	alert("Reussi!");
+}
+
+loadMap(token, pseudo) {
  // make sure to create following structure in your view.html file
  // and add a height (for example 100%) to it, else the map won't be visible
  // <ion-content>
  //  <div #map id="map" style="height:100%;"></div>
  // </ion-content>
 
+ 
+this.socket = io(localStorage.ip + ":8080", {query : 'pseudo=' + pseudo});
+this.socket.on('test', () => {
+	alert("La socket est connectée!");
+});
+this.socket.on('pos', (pos, nom) => {
+	var test = true;
+	myMarkers.forEach(function(marker){
+		if(marker.getTitle() === nom && localStorage.pseudo !== nom){
+			test = false;
+			marker.setPosition(pos);
+		}
+	});
+	if(test){
+		let markerOptions: MarkerOptions = {
+			position: pos,
+			title: nom,
+			icon: {url: './assets/img/runner.png'}
+		};
+		map.addMarker(markerOptions).then((marker: Marker) => {
+			myMarkers.push(marker);
+		});
+	}
+});
+ 
+ 
  // create a new map by passing HTMLElement
  let element: HTMLElement = document.getElementById('map');
 
- let map: GoogleMap = this.googleMaps.create(element);
+ this.map = this.googleMaps.create(element);
+ var map = this.map;
+ 
+ this.events.subscribe('menu:opened', () => {
+    map.setClickable(false);
+});
+
+this.events.subscribe('menu:closed', () => {
+	
+    map.setClickable(this.testMap);
+});
+
+
  
   var myPosition: LatLng = new LatLng(48.8566140, 2.3522220);
 
@@ -77,8 +114,12 @@ connect(token, pseudo){
 	watch.subscribe((data) => {
 		myPosition = new LatLng(data.coords.latitude, data.coords.longitude);
 		position.target = myPosition;
-		map.moveCamera(position);
-		myMarkers[0].setPosition(myPosition);
+		myMarkers.forEach(function(marker){
+		if(marker.getTitle() === 'moi'){
+			marker.setPosition(myPosition);
+		}
+	});
+		this.socket.emit("position", myPosition);
 	}, err => {
 		console.log(err);
     });
@@ -104,6 +145,6 @@ connect(token, pseudo){
  var myMarkers: Array<Marker> = [];
  }
  
-*/
+
 
 }

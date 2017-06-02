@@ -8,7 +8,7 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'settings.html'
 })
 
-export class ConnectPage {
+export class SettingsPage {
   adresse = { ip: ''};
 
   constructor(private navController: NavController) {

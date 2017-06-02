@@ -1,4 +1,4 @@
-<ion-menu [content]="content">
+<ion-menu [content]="content" (ionOpen)="menuOpened()" (ionClose)="menuClosed()">
   <ion-header>
     <ion-toolbar>
       <div style = "text-align: center; font-size: 18px;">runningApp</div>
@@ -8,7 +8,7 @@
   <ion-content>
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
+        <ng-container *ngIf="p.droit === droit || p.droit === 'utilisateur'">{{p.title}}</ng-container>
       </button>
     </ion-list>
   </ion-content>

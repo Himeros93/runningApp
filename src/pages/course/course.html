@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar >
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -7,8 +7,17 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding (click)="testMap()">
 	
-	<div #map id="map" style="height:100%;"></div>
-	<h3>coucou</h3>
+	<div #map id="map" style="height:100%;">
+	<ion-fab bottom right>
+		<button ion-fab (click)="toggle()"><ion-icon name="navigate"></ion-icon></button>
+		<ion-fab-list style="z-index:100" side="top" >
+			<button ion-fab (click)="hello()"><ion-icon name="construct"></ion-icon></button>
+			<button ion-fab><ion-icon name="people"></ion-icon></button>
+			<button ion-fab><ion-icon name="person"></ion-icon></button>
+		</ion-fab-list>
+	</ion-fab>
+	</div>
+	
 </ion-content>

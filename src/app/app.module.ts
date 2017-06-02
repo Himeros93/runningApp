@@ -19,7 +19,7 @@ import { ConnectPage } from '../pages/connect/connect';
 import { CreateTeamPage } from '../pages/createTeam/createTeam';
 import { SelectMemberModal } from '../pages/createTeam/selectMemberModal';
 import { SettingsPage } from '../pages/settings/settings';
-
+import { CourseHistPage } from '../pages/courseHist/courseHist';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -35,8 +35,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 	CoursePage,
 	ConnectPage,
     CreateTeamPage,
-	SettingsPage,
-    SelectMemberModal
+    SettingsPage,
+    SelectMemberModal,
+    CourseHistPage
   ],
   imports: [
     BrowserModule,
@@ -58,6 +59,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CreateTeamPage,
 	SettingsPage,
     SelectMemberModal,
+    CourseHistPage
   ],
   providers: [
     StatusBar,

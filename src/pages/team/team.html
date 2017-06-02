@@ -3,11 +3,11 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{nom}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
+  <ion-title>{{nom}}</ion-title>
   <ion-card>
     <ion-card-header>
     Leader: {{_createur.nom}}
@@ -17,14 +17,28 @@
     <ion-item>
       Membres:
     </ion-item>
-    <div *ngFor="let membre of _membres" (click)="itemTapped(membre)">
+    <div *ngIf="team">
+      <div  *ngFor="let membre of team._membres" (click)="memberTapped(membre)">
+        <ion-card>
+          <ion-card-content>
+            <h2>{{membre.pseudo}}</h2>
+            <p>{{membre.nom}}</p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+    <ion-item>
+      Historique des courses:
+    </ion-item>
+    <div *ngFor="let courseHist of team._coursesHist" (click)="courseHistTapped(courseHist)">
       <ion-card>
         <ion-card-content>
-          <h2>{{membre.pseudo}}</h2>
-          <p>{{membre.nom}}</p>
+          <h2>{{courseHist.nom}}</h2>
+          <p>{{courseHist._date}}</p>
+          <h2>{{courseHist.temps}}</h2>
         </ion-card-content>
       </ion-card>
     </div>
-
+  </div>
 
 </ion-content>

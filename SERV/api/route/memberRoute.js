@@ -5,15 +5,17 @@
 module.exports = function(app) {
     var Members = require('../controllers/memberController');
 
-
     // todoList Routes
     app.route('/members')
         .get(Members.list_all_members)
         .post(Members.create_a_member);
 
-    app.route('/members/:memberPseudo')
+    app.route('/members/:memberId')
         .get(Members.read_a_member);
-		
+
+    app.route('/members/min/:memberPseudo')
+        .get(Members.get_a_member);
+
 	app.route('/connect')
         .post(Members.connect_a_member);
 

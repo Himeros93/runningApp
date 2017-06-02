@@ -3,11 +3,12 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Chercher une équipe</ion-title>
+
   </ion-navbar>
 </ion-header>
 
 <ion-content class="home" padding>
+  <ion-title>Chercher une équipe</ion-title>
   <ion-item>
     <ion-input type="text" placeholder="Chercher une équipe" (input)="searchTeams($event, searchKey)"></ion-input>
   </ion-item>

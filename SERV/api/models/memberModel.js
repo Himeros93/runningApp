@@ -16,7 +16,8 @@ var MemberSchema = new Schema({
         type : String,
         select: false
     },
-    performance: [{ type: Schema.Types.ObjectId, ref: 'Members', required:true }],
+    courseHist: [{ type: Schema.Types.ObjectId, ref: 'CourseHist', required:true }],
+    performance: [{ type: Schema.Types.ObjectId, ref: 'Performance', required:true }],
     token: {type: String, unique: true}
 });
 

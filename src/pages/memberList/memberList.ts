@@ -13,6 +13,7 @@ import { Nav } from 'ionic-angular';
 export class MemberListPage {
 
   members: Array<any> = [];
+  selectedMember: any;
   @ViewChild(Nav) nav: Nav;
 
   constructor(private navController: NavController, private memberService: MemberService) {
@@ -22,7 +23,7 @@ export class MemberListPage {
 	}
   }
 
-  searchMembers(event, key) {
+  searchMembers(event) {
     if(event.target.value.length > 2) {
       this.memberService.searchMember(event.target.value).subscribe(
         data => {
@@ -40,11 +41,12 @@ export class MemberListPage {
   }
 
   itemTapped(member) {
-    console.log('click');
     console.log(member);
     this.navController.push(MemberPage, {
-      pseudo: member.pseudo,
-      nom: member.nom
-    });
+          id: member._id ,
+          pseudo: member.pseudo
+    })
   }
+
+
 }

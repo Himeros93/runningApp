@@ -11,6 +11,7 @@ import {TeamPage} from '../team/team';
 export class TeamListPage {
 
   teams: Array<any> = [];
+  selectedTeam: any;
 
   constructor(private navController: NavController, private teamService: TeamService) {
 
@@ -37,8 +38,9 @@ export class TeamListPage {
     console.log(team);
     this.navController.push(TeamPage, {
       nom: team.nom,
-      _createur: team._createur,
-      _membres: team._membres
-    });
+      createur: team._createur,
+      id: team._id
+    })
   }
+
 }

@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    Membres:
+  </ion-item>
+  <div *ngIf="courseHist">
+    <div  *ngFor="let membre of courseHist._members" (click)="memberTapped(membre)">
+      <ion-card>
+        <ion-card-content>
+          <h2>{{membre.pseudo}}</h2>
+          <p>{{membre.nom}}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

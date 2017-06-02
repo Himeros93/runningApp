@@ -64,8 +64,17 @@ exports.connect_a_member = function(req, res) {
 };
 
 exports.read_a_member = function(req, res) {
-    Member.find({ $or:[{'pseudo': new RegExp(req.params.memberPseudo, 'i')},{'nom': new RegExp(req.params.memberPseudo, 'i')}] },
-        function(err, member) {
+    Member.findById(req.params.memberId)
+    .exec(function(err, member) {
+            if (err)
+                res.send(err);
+            res.json(member);
+        });
+};
+
+exports.get_a_member = function(req, res) {
+    Member.find({ $or:[{'pseudo': new RegExp(req.params.memberPseudo, 'i')},{'nom': new RegExp(req.params.memberPseudo, 'i')}]}, 'pseudo nom')
+        .exec(function(err, member) {
             if (err)
                 res.send(err);
             res.json(member);

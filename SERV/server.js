@@ -11,6 +11,7 @@ var express = require('express'),
     Members = require('./api/models/memberModel'),
     Teams = require('./api/models/teamModel'),
     Courses = require('./api/models/courseModel'),
+    CoursesHist = require ('./api/models/courseHistModel'),
     Events = require('./api/models/eventModel'),
     bodyParser = require('body-parser');
 
@@ -34,19 +35,22 @@ parcoursRoute(app);
 var courseRoute = require('./api/route/courseRoute');
 courseRoute(app);
 
+var courseHistRoute = require('./api/route/courseHistRoute');
+courseHistRoute(app);
+
 var eventRoute = require('./api/route/eventRoute');
 eventRoute(app);
 
 app.listen(port);
 
-console.log('app RESTful API server started on: ' + port);
+console.log('Serveur REST démarré au port ' + port);
 
 var db = mongoose.connection;
 
 
 //serveur websocket
 var io = require('socket.io')(portSocket);
-console.log("Serveur demarré au port: " + portSocket);
+console.log("Serveur de socket demarré au port: " + portSocket);
 
 
 //gestion des sockets à partir d'ici
@@ -66,7 +70,7 @@ io.on('connection', function (socket) {
         console.log("Utilisateur connecté.");
         socket.emit('status', "Connecté!");
     }
-	
+
 	socket.on("position", function (pos) {
 		socket.broadcast.emit("pos", pos, socket.handshake.query.pseudo);
 	});

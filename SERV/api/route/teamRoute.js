@@ -11,11 +11,8 @@ module.exports = function(app) {
         .get(Teams.list_all_teams)
         .post(Teams.create_a_team);
 
-    app.route('/teams/:teamId')
+    app.route('/teams/:teamNom')
         .get(Teams.read_a_team)
-
-    app.route('/teams/min/:teamNom')
-        .get(Teams.get_a_team)
 
     app.route('/teams/:teamId')
         .put(Teams.update_a_team)

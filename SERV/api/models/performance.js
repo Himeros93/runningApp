@@ -9,4 +9,4 @@ var PerformanceSchema = new Schema({
     temps: Number
 });
 
-module.exports = mongoose.model('Performance', ParcoursSchema);
+module.exports = mongoose.model('Parcours', ParcoursSchema);

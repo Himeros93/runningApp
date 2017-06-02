@@ -1,4 +1,7 @@
 /**
+ * Created by A648067 on 30/05/2017.
+ */
+/**
  * Created by SMELISSON on 23/05/2017.
  */
 var mongoose = require('mongoose');
@@ -10,9 +13,7 @@ var CourseHistSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    /*parcours: { type: Schema.Types.ObjectId, ref: 'Parcours'},*/
-    _members: [{ type: Schema.Types.ObjectId, ref: 'Members'}],
-    temps : String
+    _members: [{ type: Schema.Types.ObjectId, ref: 'Members'}]
 });
 
-module.exports = mongoose.model('CourseHist', CourseHistSchema);
+module.exports = mongoose.model('Courses', CourseSchema);

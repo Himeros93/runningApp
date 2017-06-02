@@ -7,9 +7,8 @@ var mongoose = require('mongoose'),
 
 exports.list_all_teams = function(req, res) {
     Team.find({})
+    .populate('_membre')
     .populate('_createur')
-    .populate('_membres')
-    .populate('_coursesHist')
     .exec(function(err, team) {
         if (err)
             res.send(err);
@@ -28,25 +27,14 @@ exports.create_a_team = function(req, res) {
 };
 
 exports.read_a_team = function(req, res) {
-    Team.findById(req.params.teamId)
+    Team.find({'nom': new RegExp(req.params.teamNom, 'i')})
         .populate('_membres' , 'pseudo nom')
-        .populate('_createur' , 'pseudo nom')
-        .populate('_coursesHist', 'nom _date temps')
+        .populate('_createur')
         .exec(function(err, team) {
         if (err)
             res.send(err);
         res.json(team);
     });
-};
-
-exports.get_a_team = function(req, res) {
-    Team.find({'nom': new RegExp(req.params.teamNom, 'i')} , 'nom _createur')
-        .populate('_createur' , 'pseudo nom')
-        .exec(function(err, team) {
-            if (err)
-                res.send(err);
-            res.json(team);
-        });
 };
 
 exports.update_a_team = function(req, res) {

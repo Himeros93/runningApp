@@ -69,7 +69,7 @@ io.on('connection', function (socket) {
 	
 	socket.on("position", function (pos) {
 		socket.broadcast.emit("pos", pos, socket.handshake.query.pseudo);
-	}
+	});
 
     //envoie de la position d'un utilisateur à tous les utilisateurs
     socket.on("updatePosition", function (pos) {

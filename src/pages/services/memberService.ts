@@ -4,6 +4,9 @@
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Headers} from '@angular/http';
+import { SpinnerDialog } from '@ionic-native/spinner-dialog';
+import { NavController } from 'ionic-angular';
+import { ActualiteePage } from '../actualitee/actualitee';
 
 export class MemberService {
   static get parameters() {
@@ -16,13 +19,13 @@ export class MemberService {
   }
 
   getMember(memberId) {
-    var url = 'http://localhost:3000/members/' + memberId;
+    var url = localStorage.ip + ':3000/members/' + memberId;
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
 
   searchMember(memberPseudo) {
-    var url = 'http://localhost:3000/members/min/' + memberPseudo;
+    var url = localStorage.ip + ':3000/members/min/' + memberPseudo;
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
@@ -31,23 +34,26 @@ export class MemberService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(
-      'http://localhost:3000/members/',
+      localStorage.ip + ':3000/members/',
       JSON.stringify(member), {headers})
       .map(res => res.json())
       .subscribe( data => {console.log(data)});
   }
 
-  connectMember(member){
+  connectMember(member, dial, nav){
+	dial.show();
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(
-      'http://localhost:3000/connect/',
+      localStorage.ip + ':3000/connect/',
       JSON.stringify(member), {headers})
       .map(res => res.json())
       .subscribe( data => {
 		  console.log(data);
 		  localStorage.setItem("token", data.token);
 		  localStorage.setItem("pseudo", data.pseudo);
+		  dial.hide();
+		  nav.setRoot(ActualiteePage);
 	  });
   }
 

@@ -30,6 +30,7 @@ export class CoursePage implements AfterViewInit{
  socket: any;
  map: GoogleMap;
  testMap: boolean;
+ parcours: Array<Marker> = [];
 
 // Load map only after view is initialized
 ngAfterViewInit() {
@@ -43,8 +44,17 @@ toggle(){
 	this.map.setClickable(this.testMap);
 }
 
-hello(){
-	alert("Reussi!");
+construct(){
+	this.map.addEventListener(GoogleMapsEvent.MARKER_CLICK).subscribe(
+		data => {
+			let markerOptions: MarkerOptions = {
+				position: data,
+				title: "Point " + this.parcours.length,
+				icon: {url: './assets/img/flag.png'}
+			};
+			
+		}
+	);
 }
 
 loadMap(token, pseudo) {
@@ -55,7 +65,7 @@ loadMap(token, pseudo) {
  // </ion-content>
 
  
-this.socket = io(localStorage.ip + ":8080", {query : 'pseudo=' + pseudo});
+this.socket = io(localStorage.ip + localStorage.socketPort, {query : 'pseudo=' + pseudo});
 this.socket.on('test', () => {
 	alert("La socket est connectée!");
 });

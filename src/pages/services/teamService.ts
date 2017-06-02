@@ -15,13 +15,13 @@ export class TeamService {
   }
 
   getTeam(teamName) {
-    var url = 'http://localhost:3000/teams/' + teamName;
+    var url = localStorage.ip + ':3000/teams/' + teamName;
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
 
   searchTeam(teamId) {
-    var url = 'http://localhost:3000/teams/min/' + teamId;
+    var url = localStorage.ip + ':3000/teams/min/' + teamId;
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
@@ -30,7 +30,7 @@ export class TeamService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(
-      'http://localhost:3000/teams/',
+      localStorage.ip + ':3000/teams/',
       JSON.stringify(team), {headers})
       .map(res => res.json())
       .subscribe( data => {console.log(data)});

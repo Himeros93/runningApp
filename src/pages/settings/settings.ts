@@ -3,13 +3,17 @@
  */
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { ActualiteePage } from '../actualitee/actualitee';
 
 @Component({
   templateUrl: 'settings.html'
 })
 
 export class SettingsPage {
-  adresse = { ip: ''};
+  adresse = { 
+				ip: '',
+				socketPort: ''
+			};
 
   constructor(private navController: NavController) {
 	
@@ -17,5 +21,8 @@ export class SettingsPage {
 
   valideForm(){
 	localStorage.setItem("ip", this.adresse.ip);
+	localStorage.setItem("socketPort", this.adresse.socketPort);
+	alert("Validé.");
+	this.navController.setRoot(ActualiteePage);
   }
 }

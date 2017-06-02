@@ -15,9 +15,14 @@
       <ion-label stacked>Ip:</ion-label>
       <ion-input type="text" name="@ip" required [(ngModel)]="adresse.ip"></ion-input>
     </ion-item>
+	
+	<ion-item>
+      <ion-label stacked>Port Socket:</ion-label>
+      <ion-input type="text" name="SocketPort" required [(ngModel)]="adresse.socketPort"></ion-input>
+    </ion-item>
 
     <ion-item>
-    <button ion-button class="register-btn" type="submit">Se connecter</button>
+    <button ion-button class="register-btn" type="submit">Valider</button>
     </ion-item>
   </ion-list>
   </form>

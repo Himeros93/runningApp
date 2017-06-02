@@ -18,13 +18,13 @@ export class CourseHistService {
   }
 
   getCoursesHist(courseHistId) {
-    var url = 'http://localhost:3000/coursesHist/' + courseHistId;
+    var url = localStorage.ip + '3000/coursesHist/' + courseHistId;
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
 
   searchCoursesHist(courseHistId) {
-    var url = 'http://localhost:3000/coursesHist/min/' + courseHistId;
+    var url = localStorage.ip + '3000/coursesHist/min/' + courseHistId;
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
@@ -33,7 +33,7 @@ export class CourseHistService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(
-      'http://localhost:3000/coursesHist/',
+      localStorage.ip + '3000/coursesHist/',
       JSON.stringify(courseHist), {headers})
       .map(res => res.json())
       .subscribe( data => {console.log(data)});

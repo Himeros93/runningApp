@@ -52,7 +52,9 @@ construct(){
 				title: "Point " + this.parcours.length,
 				icon: {url: './assets/img/flag.png'}
 			};
-			
+			this.map.addMarker(markerOptions).then((marker: Marker) => {
+				this.parcours.push(marker);
+			});
 		}
 	);
 }
@@ -65,19 +67,19 @@ loadMap(token, pseudo) {
  // </ion-content>
 
  
-this.socket = io(localStorage.ip + localStorage.socketPort, {query : 'pseudo=' + pseudo});
+this.socket = io(localStorage.ip + ':' + localStorage.socketPort, {query : 'pseudo=' + pseudo});
 this.socket.on('test', () => {
 	alert("La socket est connectée!");
 });
 this.socket.on('pos', (pos, nom) => {
-	var test = true;
+	var test = false;
 	myMarkers.forEach(function(marker){
 		if(marker.getTitle() === nom && localStorage.pseudo !== nom){
-			test = false;
+			test = true;
 			marker.setPosition(pos);
 		}
 	});
-	if(test){
+	if(!test && localStorage.pseudo !== nom){
 		let markerOptions: MarkerOptions = {
 			position: pos,
 			title: nom,
@@ -125,7 +127,7 @@ this.events.subscribe('menu:closed', () => {
 		myPosition = new LatLng(data.coords.latitude, data.coords.longitude);
 		position.target = myPosition;
 		myMarkers.forEach(function(marker){
-		if(marker.getTitle() === 'moi'){
+		if(marker.getTitle() === 'Moi'){
 			marker.setPosition(myPosition);
 		}
 	});

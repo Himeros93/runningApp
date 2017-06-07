@@ -5,14 +5,15 @@ import {
  LatLng,
  CameraPosition,
  MarkerOptions,
- Marker
+ Marker,
+ Polyline
 } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import * as io from "socket.io-client";
 import { Storage } from '@ionic/storage';
 
 import {Component, AfterViewInit} from '@angular/core';
-import {NavController, Events} from 'ionic-angular';
+import {NavController, Events, AlertController} from 'ionic-angular';
 import {ConnectPage} from '../connect/connect';
 
 @Component({
@@ -21,7 +22,7 @@ import {ConnectPage} from '../connect/connect';
 })
 
 export class CoursePage implements AfterViewInit{
- constructor(private googleMaps: GoogleMaps, private geolocation: Geolocation, private storage: Storage, private navCtrl: NavController, public events: Events) {
+ constructor(private googleMaps: GoogleMaps, private geolocation: Geolocation, private storage: Storage, private navCtrl: NavController, public events: Events, public alertCtrl: AlertController) {
 	 if (!localStorage.pseudo && !localStorage.token){
 		this.navCtrl.setRoot(ConnectPage);
 	}
@@ -31,6 +32,7 @@ export class CoursePage implements AfterViewInit{
  map: GoogleMap;
  testMap: boolean;
  parcours: Array<Marker> = [];
+ parcoursLines: Array<Polyline> = [];
 
 // Load map only after view is initialized
 ngAfterViewInit() {
@@ -54,11 +56,62 @@ construct(){
 			};
 			this.map.addMarker(markerOptions).then((marker: Marker) => {
 				this.parcours.push(marker);
+				marker.on(GoogleMapsEvent.MARKER_CLICK, function(){
+					this.showConfirm(marker);
+				});
+				if(this.parcours.length > 1){
+					var point1: LatLng;
+					point1 = this.parcours[this.parcours.length - 2].getPosition().lat;
+					var point2: LatLng;
+					point2 = this.parcours[this.parcours.length - 2].getPosition().lat;
+					this.map.addPolyline({'points': [point1, point2], 'color' : "red", "width" : 4}).then((polyline: Polyline) =>{
+						this.parcoursLines.push(polyline);
+					});
+				}
+				
 			});
 		}
 	);
 }
-
+showConfirm(marker) {
+   let confirm = this.alertCtrl.create({
+     title: 'Effacer ce point?',
+     message: 'Etes vous sur de vouloir supprimer ce marqueur?',
+     buttons: [
+       {
+         text: 'Non',
+         handler: () => {
+           console.log('Suppression annulée.');
+         }
+       },
+       {
+         text: 'Oui',
+         handler: () => {
+			console.log('Suppression du marqueur.');
+			if(this.parcours.indexOf(marker) !== this.parcours.length -1){
+				this.parcoursLines.splice(this.parcours.indexOf(marker), 1);
+			}
+			if(this.parcours.indexOf(marker) !== 0){
+				this.parcoursLines.splice(this.parcours.indexOf(marker) - 1, 1);
+				if(this.parcours.indexOf(marker) !== this.parcours.length -1){
+					
+					var point1: LatLng;
+					this.parcours[this.parcours.indexOf(marker) - 1].getPosition(function(latLng) {point1 = latLng;});
+					var point2: LatLng;
+					this.parcours[this.parcours.indexOf(marker) + 1].getPosition(function(latLng) {point2 =  latLng;});
+					this.map.addPolyline({'points': [point1, point2], 'color' : "red", "width" : 4}, function(polyline){
+						this.parcoursLines.splice(this.parcours.indexOf(marker) - 1, 0, polyline);
+					});
+				}
+			}
+			this.parcours.splice(this.parcours.indexOf(marker), 1);
+         }
+       }
+     ]
+   });
+   confirm.present();
+ }
+ 
 loadMap(token, pseudo) {
  // make sure to create following structure in your view.html file
  // and add a height (for example 100%) to it, else the map won't be visible

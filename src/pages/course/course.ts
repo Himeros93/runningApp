@@ -56,16 +56,22 @@ construct(){
 			};
 			this.map.addMarker(markerOptions).then((marker: Marker) => {
 				this.parcours.push(marker);
-				marker.on(GoogleMapsEvent.MARKER_CLICK, function(){
-					this.showConfirm(marker);
-				});
+				marker.addEventListener(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {this.showConfirm(marker);});
 				if(this.parcours.length > 1){
-					var point1: LatLng;
-					point1 = this.parcours[this.parcours.length - 2].getPosition().lat;
-					var point2: LatLng;
-					point2 = this.parcours[this.parcours.length - 2].getPosition().lat;
-					this.map.addPolyline({'points': [point1, point2], 'color' : "red", "width" : 4}).then((polyline: Polyline) =>{
-						this.parcoursLines.push(polyline);
+					var coordi1: number;
+					var coordi2: number;
+					var coordi3: number;
+					var coordi4: number;
+					var map = this.map;
+					this.parcours[this.parcours.length - 2].getPosition().then(function(coord){coordi1 = coord.lat; coordi2 = coord.lng;});
+					marker.getPosition().then(function(coord){
+						coordi3 = coord.lat;
+						coordi4 = coord.lng;
+						map.addPolyline({points: [new LatLng(coordi1, coordi2), new LatLng(coordi3, coordi4)], 'color' : "red", "width" : 10, 'zIndex': 3}).then((polyline: Polyline) =>{
+							this.parcoursLines.push(polyline);
+							alert(polyline);
+						});
+						alert(coordi1 + " " + coordi2);
 					});
 				}
 				
@@ -73,7 +79,11 @@ construct(){
 		}
 	);
 }
+affectPoints(coord, point){
+	point = coord;
+}
 showConfirm(marker) {
+   this.toggle();
    let confirm = this.alertCtrl.create({
      title: 'Effacer ce point?',
      message: 'Etes vous sur de vouloir supprimer ce marqueur?',
@@ -82,29 +92,34 @@ showConfirm(marker) {
          text: 'Non',
          handler: () => {
            console.log('Suppression annulée.');
+		   this.toggle();
          }
        },
        {
          text: 'Oui',
          handler: () => {
 			console.log('Suppression du marqueur.');
+			this.toggle();
 			if(this.parcours.indexOf(marker) !== this.parcours.length -1){
 				this.parcoursLines.splice(this.parcours.indexOf(marker), 1);
 			}
 			if(this.parcours.indexOf(marker) !== 0){
 				this.parcoursLines.splice(this.parcours.indexOf(marker) - 1, 1);
 				if(this.parcours.indexOf(marker) !== this.parcours.length -1){
-					
-					var point1: LatLng;
-					this.parcours[this.parcours.indexOf(marker) - 1].getPosition(function(latLng) {point1 = latLng;});
-					var point2: LatLng;
-					this.parcours[this.parcours.indexOf(marker) + 1].getPosition(function(latLng) {point2 =  latLng;});
-					this.map.addPolyline({'points': [point1, point2], 'color' : "red", "width" : 4}, function(polyline){
+					var point1Lat : number;
+					var point1Lng : number;
+					var point2Lat : number;
+					var point2Lng : number;
+					this.parcours[this.parcours.indexOf(marker) - 1].getPosition().then(function(latLng) {point1Lat = latLng.lat; point1Lng = latLng.lng;});
+					this.parcours[this.parcours.indexOf(marker) + 1].getPosition().then(function(latLng) {point2Lat = latLng.lat; point2Lng = latLng.lng;});
+					this.map.addPolyline({'points': [new LatLng(point1Lat, point1Lng), new LatLng(point2Lat, point2Lng)], 'color' : "red", "width" : 4, 'zIndex': 8}).then((polyline: Polyline) =>{
 						this.parcoursLines.splice(this.parcours.indexOf(marker) - 1, 0, polyline);
 					});
+					
 				}
 			}
 			this.parcours.splice(this.parcours.indexOf(marker), 1);
+			marker.remove();
          }
        }
      ]

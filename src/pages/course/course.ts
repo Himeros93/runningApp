@@ -101,9 +101,11 @@ showConfirm(marker) {
 			console.log('Suppression du marqueur.');
 			this.toggle();
 			if(this.parcours.indexOf(marker) !== this.parcours.length -1){
+				this.parcoursLines[this.parcours.indexOf(marker)].remove();
 				this.parcoursLines.splice(this.parcours.indexOf(marker), 1);
 			}
 			if(this.parcours.indexOf(marker) !== 0){
+				this.parcoursLines[this.parcours.indexOf(marker) - 1].remove();
 				this.parcoursLines.splice(this.parcours.indexOf(marker) - 1, 1);
 				if(this.parcours.indexOf(marker) !== this.parcours.length -1){
 					var point1Lat : number;
@@ -111,11 +113,12 @@ showConfirm(marker) {
 					var point2Lat : number;
 					var point2Lng : number;
 					this.parcours[this.parcours.indexOf(marker) - 1].getPosition().then(function(latLng) {point1Lat = latLng.lat; point1Lng = latLng.lng;});
-					this.parcours[this.parcours.indexOf(marker) + 1].getPosition().then(function(latLng) {point2Lat = latLng.lat; point2Lng = latLng.lng;});
-					this.map.addPolyline({'points': [new LatLng(point1Lat, point1Lng), new LatLng(point2Lat, point2Lng)], 'color' : "red", "width" : 4, 'zIndex': 8}).then((polyline: Polyline) =>{
-						this.parcoursLines.splice(this.parcours.indexOf(marker) - 1, 0, polyline);
+					this.parcours[this.parcours.indexOf(marker) + 1].getPosition().then(function(latLng) {point2Lat = latLng.lat; point2Lng = latLng.lng;
+						this.map.addPolyline({'points': [new LatLng(point1Lat, point1Lng), new LatLng(point2Lat, point2Lng)], 'color' : "red", "width" : 4, 'zIndex': 3}).then((polyline: Polyline) =>{
+							this.parcoursLines.splice(this.parcours.indexOf(marker) - 1, 0, polyline);
+							alert(point1Lat + " " + point1Lng);
+						});
 					});
-					
 				}
 			}
 			this.parcours.splice(this.parcours.indexOf(marker), 1);

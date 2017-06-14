@@ -13,7 +13,7 @@ import * as io from "socket.io-client";
 import { Storage } from '@ionic/storage';
 
 import {Component, AfterViewInit} from '@angular/core';
-import {NavController, Events, AlertController} from 'ionic-angular';
+import {NavController, Events, AlertController, FabContainer} from 'ionic-angular';
 import {ConnectPage} from '../connect/connect';
 
 @Component({
@@ -32,7 +32,7 @@ export class CoursePage implements AfterViewInit{
  map: GoogleMap;
  testMap: boolean;
  parcours: Array<Marker> = [];
- parcoursLines: Array<Polyline> = [];
+ parcoursLines: Array<any> = [];
 
 // Load map only after view is initialized
 ngAfterViewInit() {
@@ -46,7 +46,10 @@ toggle(){
 	this.map.setClickable(this.testMap);
 }
 
-construct(){
+construct(fab: FabContainer){
+	alert("Mode construction de parcours");
+	fab.close();
+	this.toggle();
 	this.map.addEventListener(GoogleMapsEvent.MARKER_CLICK).subscribe(
 		data => {
 			let markerOptions: MarkerOptions = {
@@ -63,24 +66,20 @@ construct(){
 					var coordi3: number;
 					var coordi4: number;
 					var map = this.map;
+					var app = this;
 					this.parcours[this.parcours.length - 2].getPosition().then(function(coord){coordi1 = coord.lat; coordi2 = coord.lng;});
 					marker.getPosition().then(function(coord){
 						coordi3 = coord.lat;
 						coordi4 = coord.lng;
 						map.addPolyline({points: [new LatLng(coordi1, coordi2), new LatLng(coordi3, coordi4)], 'color' : "red", "width" : 10, 'zIndex': 3}).then((polyline: Polyline) =>{
-							this.parcoursLines.push(polyline);
-							alert(polyline);
+							app.parcoursLines.push(polyline);
 						});
-						alert(coordi1 + " " + coordi2);
 					});
 				}
 				
 			});
 		}
 	);
-}
-affectPoints(coord, point){
-	point = coord;
 }
 showConfirm(marker) {
    this.toggle();
@@ -99,7 +98,7 @@ showConfirm(marker) {
          text: 'Oui',
          handler: () => {
 			console.log('Suppression du marqueur.');
-			this.toggle();
+			
 			if(this.parcours.indexOf(marker) !== this.parcours.length -1){
 				this.parcoursLines[this.parcours.indexOf(marker)].remove();
 				this.parcoursLines.splice(this.parcours.indexOf(marker), 1);
@@ -112,17 +111,19 @@ showConfirm(marker) {
 					var point1Lng : number;
 					var point2Lat : number;
 					var point2Lng : number;
+					var map = this.map;
+					var app = this;
 					this.parcours[this.parcours.indexOf(marker) - 1].getPosition().then(function(latLng) {point1Lat = latLng.lat; point1Lng = latLng.lng;});
 					this.parcours[this.parcours.indexOf(marker) + 1].getPosition().then(function(latLng) {point2Lat = latLng.lat; point2Lng = latLng.lng;
-						this.map.addPolyline({'points': [new LatLng(point1Lat, point1Lng), new LatLng(point2Lat, point2Lng)], 'color' : "red", "width" : 4, 'zIndex': 3}).then((polyline: Polyline) =>{
-							this.parcoursLines.splice(this.parcours.indexOf(marker) - 1, 0, polyline);
-							alert(point1Lat + " " + point1Lng);
+						map.addPolyline({points: [new LatLng(point1Lat, point1Lng), new LatLng(point2Lat, point2Lng)], 'color' : "red", "width" : 10, 'zIndex': 3}).then((polyline: Polyline) =>{
+							app.parcoursLines.splice(app.parcours.indexOf(marker) - 1, 0, polyline);
 						});
 					});
 				}
 			}
 			this.parcours.splice(this.parcours.indexOf(marker), 1);
 			marker.remove();
+			this.toggle();
          }
        }
      ]

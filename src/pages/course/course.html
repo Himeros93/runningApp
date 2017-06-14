@@ -10,10 +10,10 @@
 <ion-content padding (click)="testMap()">
 	
 	<div #map id="map" style="height:100%;">
-	<ion-fab bottom right>
+	<ion-fab bottom right #fab>
 		<button ion-fab (click)="toggle()"><ion-icon name="navigate"></ion-icon></button>
 		<ion-fab-list style="z-index:100" side="top" >
-			<button ion-fab (click)="construct()"><ion-icon name="construct"></ion-icon></button>
+			<button ion-fab (click)="construct(fab)"><ion-icon name="construct"></ion-icon></button>
 			<button ion-fab><ion-icon name="people"></ion-icon></button>
 			<button ion-fab><ion-icon name="person"></ion-icon></button>
 		</ion-fab-list>
